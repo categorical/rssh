@@ -1,0 +1,34 @@
+
+------- PC2 (remote)
+ssh -N -R 16000:localhost:22 rssh@SERVER
+and use autossh to keep connection up
+
+------- SERVER (intermediate)
+useradd rssh
+chown -R rssh:rssh /home/rssh/.ssh
+cat PC2PUB >> /home/rssh/.ssh/authorized_keys
+cat PC1PUB >> /root/.ssh/authorized_keys
+
+the remote should not be allowed to use the shell
+sshd_config (has to be at the end of the file)
+Match User rssh
+    AllowTcpForwarding yes
+    ForceCommand /bin/false
+#    X11Forwarding no
+#    PermitTTY no
+
+------- PC1 (local)
+host rssh
+user rssh
+hostname SERVER 
+
+host PC2
+user PC2USER
+hostname localhost
+port 16000
+proxyjump rssh
+
+i.e. ssh -J SERVER -p 16000 PC2USER@localhost
+
+
+
