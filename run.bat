@@ -12,7 +12,7 @@ SET "dssh=d:\home\.ssh\"
     -o ServerAliveCountMax=1 ^
     -N -R %remoteport%:localhost:22 ^
     -i "%dssh%id_rsa" ^
-    -o UserKnownHostsFile="%dssh%known_hosts" ^
+    -o UserKnownHostsFile="""%dssh%known_hosts""" ^
     "%remote%"
 
 
