@@ -8,7 +8,7 @@ SET "remote=root@gitlab"
 SET "dssh=d:\home\.ssh\"
 
 "%executable%" -M0 ^
-    -o ServerAliveInterval=120 ^
+    -o ServerAliveInterval=30 ^
     -o ServerAliveCountMax=1 ^
     -N -R %remoteport%:localhost:22 ^
     -i "%dssh%id_rsa" ^
