@@ -7,6 +7,8 @@ SET "remoteport=16000"
 SET "remote=root@gitlab"
 SET "dssh=d:\home\.ssh\"
 
+
+ECHO|SET /p="%date% %time:~0,-3% " 1>&2
 "%executable%" -M0 ^
     -o ServerAliveInterval=30 ^
     -o ServerAliveCountMax=1 ^
