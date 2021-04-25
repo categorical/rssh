@@ -26,6 +26,7 @@ net stop %servicename%
 "%nssm%" set %servicename% appexit default restart
 "%nssm%" set %servicename% apprestartdelay 10000
 "%nssm%" set %servicename% appthrottle 0
+"%nssm%" set %servicename% start service_demand_start
 
 
 
