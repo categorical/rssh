@@ -3,8 +3,8 @@
 @echo off
 SET "thisdir=%~dp0"
 SET "executable=d:\cygwin64\bin\autossh.exe"
-SET "remoteport=16000"
-SET "remote=root@gitlab"
+SET "remoteport=17071"
+SET "remote=rssh@intermediate"
 SET "dssh=d:\home\.ssh\"
 
 

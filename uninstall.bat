@@ -3,7 +3,7 @@
 
 SET "thisdir=%~dp0"
 
-SET servicename=rssh
+SET "servicename=0rssh"
 CALL :uninstallservice
 
 PAUSE

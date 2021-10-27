@@ -4,7 +4,7 @@
 dthis=$(cd "$(dirname "$0")" && pwd)
 
 executable=autossh
-remoteport=16009
+remoteport=17071
 remote='rssh@intermediate'
 dssh=$(cygpath -u 'd:\home\.ssh')
 

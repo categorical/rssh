@@ -10,7 +10,7 @@ SET "dlog=%thisdir%log\"
 RD /q /s "%dlog%" 2>nul
 MKDIR "%dlog%" 2>nul
 
-SET servicename=rssh
+SET "servicename=0rssh"
 CALL :installservice
 
 PAUSE
