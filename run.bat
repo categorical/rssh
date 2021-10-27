@@ -14,7 +14,7 @@ ECHO|SET /p="%date% %time:~0,-3% " 1>&2
     -o ServerAliveCountMax=1 ^
     -o exitonforwardfailure=yes ^
     -N -R %remoteport%:localhost:22 ^
-    -i "%dssh%id_rsa" ^
+    -i "%dssh%altkeys\ex15\id_rsa" ^
     -o UserKnownHostsFile="""%dssh%known_hosts""" ^
     "%remote%"
 
