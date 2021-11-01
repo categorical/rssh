@@ -1,20 +1,25 @@
 
 
 @echo off
-SET "thisdir=%~dp0"
+SET "dthis=%~dp0"
+FOR %%f IN ("%dthis%\..\") DO ^
+SET "droot=%%~dpf"
+SET "fenv=%droot%env.bat"
 SET "executable=d:\cygwin64\bin\autossh.exe"
 SET "remoteport=17071"
 SET "remote=rssh@intermediate"
 SET "dssh=d:\home\.ssh\"
+SET "fidentity=%dssh%id_rsa"
+IF exist "%fenv%" CALL "%fenv%"
 
-
+SET "AUTOSSH_MESSAGE=123nasd"
 ECHO|SET /p="%date% %time:~0,-3% " 1>&2
 "%executable%" -M0 ^
     -o ServerAliveInterval=30 ^
     -o ServerAliveCountMax=1 ^
     -o exitonforwardfailure=yes ^
     -N -R %remoteport%:localhost:22 ^
-    -i "%dssh%altkeys\ex15\id_rsa" ^
+    -i "%fidentity%" ^
     -o UserKnownHostsFile="""%dssh%known_hosts""" ^
     "%remote%"
 

@@ -1,23 +1,26 @@
 #!/bin/bash
 
 dthis="$(cd "$(dirname "$0")" && pwd)"
+droot="$(cd "$dthis/.." && pwd)"
+dstaging="$droot/staging";[ -d "$dstaging" ]||mkdir "$dstaging"
+
 
 _pack(){
     local items=()
-    items+=('nssm.exe')
-    items+=('install.bat')
-    items+=('run.bat')
-    items+=('uninstall.bat')
+    items+=('vendor/nssm.exe')
+    items+=('scripts/install.bat')
+    items+=('scripts/run.bat')
+    items+=('scripts/uninstall.bat')
  
-    #local d="$dprogroot/GameServer/bin/Release/"
-    local d="$dthis"
-    local fdest=$(cygpath -w "$dthis/rssh.zip")
+    local d="$droot"
+    local fdest=$(cygpath -w "$dstaging/rssh.zip")
     [ -f "$fdest" ]&&(set -x;rm "$fdest")||:
-    for v in "${items[@]}";do
-        local f=$(cygpath -w "$d/$v")
+    (cd "$d" && for v in "${items[@]}";do
+        #local f=$(cygpath -w "$d/$v")
+        local f="$v"
         [ -f "$f" ]||return 1
         7z a "$fdest" "$f"
-    done
+    done)
     if [ -f "$fdest" ];then
         7z l "$fdest" \
             && _infof 'out: %s' "$fdest"

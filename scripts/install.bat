@@ -1,16 +1,21 @@
 
 @echo off
 
-SET "thisdir=%~dp0"
+SET "dthis=%~dp0"
+FOR %%f IN ("%dthis%\..\") DO ^
+SET "droot=%%~dpf"
 
-SET "nssm=%thisdir%nssm.exe"
+
+SET "nssm=%droot%\vendor\nssm.exe"
 SET "run=%thisdir%run.bat"
-SET "dlog=%thisdir%log\"
+SET "dlog=%droot%log\"
+SET "fenv=%droot%env.bat"
+SET "servicename=0rssh"
+IF exist "%fenv%" CALL "%fenv%"
 
 RD /q /s "%dlog%" 2>nul
 MKDIR "%dlog%" 2>nul
 
-SET "servicename=0rssh"
 CALL :installservice
 
 PAUSE
