@@ -7,7 +7,7 @@ SET "droot=%%~dpf"
 
 
 SET "nssm=%droot%\vendor\nssm.exe"
-SET "run=%thisdir%run.bat"
+SET "run=%dthis%run.bat"
 SET "dlog=%droot%log\"
 SET "fenv=%droot%env.bat"
 SET "servicename=0rssh"
