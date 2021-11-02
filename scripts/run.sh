@@ -2,11 +2,12 @@
 
 
 dthis=$(cd "$(dirname "$0")" && pwd)
-
+droot="$(cd "$dthis/.." && pwd)"
 executable=autossh
 remoteport=17075
 remote='rssh@gitlab'
 dssh=$(cygpath -u 'd:\home\.ssh')
+source "$dthis/env.sh"
 
 
 "$executable" -M0 \
