@@ -7,15 +7,17 @@ executable=autossh
 remoteport=17075
 remote='rssh@gitlab'
 dssh=$(cygpath -u 'd:\home\.ssh')
+fidentity=$(cygpath -u 'd:\home\.ssh\id_rsa')
 source "$dthis/env.sh"
-
+dssh=$(cygpath -u "$dssh")
+fidentity=$(cygpath -u "$fidentity")
 
 "$executable" -M0 \
     -oserveraliveinterval=60 \
     -oserveralivecountmax=1 \
     -oexitonforwardfailure=yes \
     -N -R "$remoteport:localhost:22" \
-    -i "$dssh/id_rsa" \
+    -i"$fidentity" \
     -ouserknownhostsfile="\"$dssh/known_hosts\"" \
     "$remote" \
     2>&1|while read -r;do
