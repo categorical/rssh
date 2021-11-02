@@ -2,7 +2,13 @@
 
 
 
-servicename='1rssh'
+dthis="$(cd "$(dirname "$0")" && pwd)"
+droot="$(cd "$dthis/.." && pwd)"
+fenv="$droot/env.bat"
+servicename='0rssh'
+
+[ ! -f "$fenv" ]||servicename=$(sed -n 's/^SET "servicename=\([0-9a-z]*\)"$/\1/p' "$fenv")
+
 
 _query(){
     
@@ -10,6 +16,7 @@ _query(){
     reg query "$k"
 
     reg query "$k"'\parameters'
+    reg query "$k"'\parameters\appexit'
 
 }
 
