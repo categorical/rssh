@@ -2,7 +2,7 @@
 
 dthis="$(cd "$(dirname "$0")" && pwd)"
 droot="$(cd "$dthis/.." && pwd)"
-dlog="$droot/log2"
+dlog="$droot/log"
 fexecutable="$dthis/run.sh"
 
 
@@ -12,8 +12,8 @@ _install(){
     :
     cygrunsrv -I "$servicename" \
         -p "$fexecutable" \
-        -1 "$dlog/stdout" \
-        -2 "$dlog/stderr"
+        -1 "$dlog/$servicename.stdout" \
+        -2 "$dlog/$servicename.stderr"
 }
 
 _uninstall(){

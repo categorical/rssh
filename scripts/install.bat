@@ -28,8 +28,8 @@ sc delete %servicename%
 net stop %servicename%
 "%nssm%" install %servicename% "%run%"
 "%nssm%" start %servicename%
-"%nssm%" set %servicename% appstdout "%dlog%stdout"
-"%nssm%" set %servicename% appstderr "%dlog%stderr"
+"%nssm%" set %servicename% appstdout "%dlog%%servicename%.stdout"
+"%nssm%" set %servicename% appstderr "%dlog%%servicename%.stderr"
 "%nssm%" set %servicename% appexit default restart
 "%nssm%" set %servicename% apprestartdelay 10000
 "%nssm%" set %servicename% appthrottle 0

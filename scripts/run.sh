@@ -16,6 +16,9 @@ dssh=$(cygpath -u 'd:\home\.ssh')
     -N -R "$remoteport:localhost:22" \
     -i "$dssh/id_rsa" \
     -ouserknownhostsfile="\"$dssh/known_hosts\"" \
-    "$remote"
+    "$remote" \
+    2>&1|while read -r;do
+        printf '%s %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "$REPLY"
+    done
 
 
