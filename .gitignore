@@ -1,5 +1,5 @@
 *.zip
-log
+log*
 staging
 
 
