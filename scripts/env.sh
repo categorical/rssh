@@ -16,7 +16,6 @@ _sourcebat(){
             *);;
         esac
     done < "$fenv"
-    #[ ! -f "$fenv" ]||servicename=$(sed -n 's/^SET "servicename=\([0-9a-z]*\)"$/\1/p' "$fenv")
 }
 _sourcebatline(){
     local k v
