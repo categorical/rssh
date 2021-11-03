@@ -2,7 +2,7 @@
 
 
 dthis=$(cd "$(dirname "$0")" && pwd)
-droot="$(cd "$dthis/.." && pwd)"
+droot="$(cd "$dthis/../.." && pwd)"
 executable=autossh
 remoteport=17075
 remote='rssh@gitlab'

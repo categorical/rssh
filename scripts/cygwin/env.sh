@@ -3,7 +3,7 @@
 
 
 dthis="$(cd "$(dirname "$0")" && pwd)"
-droot="$(cd "$dthis/.." && pwd)"
+droot="$(cd "$dthis/../.." && pwd)"
 fenv="$droot/env.bat"
 
 

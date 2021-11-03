@@ -12,18 +12,18 @@ _inspect(){
 _install(){
     :
     if [ "$isnssm" = t ];then
-        "$dthis/scripts/install.bat"
+        "$dthis/scripts/win/install.bat"
     else
-        "$dthis/scripts/install.sh" --install
+        "$dthis/scripts/cygwin/install.sh" --install
     fi
 }
 
 _remove(){
     :
     if [ "$isnssm" = t ];then
-        "$dthis/scripts/uninstall.bat"
+        "$dthis/scripts/win/uninstall.bat"
     else
-        "$dthis/scripts/install.sh" --remove
+        "$dthis/scripts/cygwin/install.sh" --remove
     fi
 }
 

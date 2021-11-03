@@ -1,12 +1,10 @@
 #!/bin/bash
 
 dthis="$(cd "$(dirname "$0")" && pwd)"
-droot="$(cd "$dthis/.." && pwd)"
+droot="$(cd "$dthis/../.." && pwd)"
 dlog="$droot/log"
 fexecutable="$dthis/run.sh"
-
-
-servicename='2rssh'
+source "$dthis/env.sh"
 
 _install(){
     :
