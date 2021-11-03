@@ -16,7 +16,7 @@ _install(){
         -2 "$dlog/$servicename.stderr"
 }
 
-_uninstall(){
+_remove(){
     :
     cygrunsrv -R "$servicename"
 }
@@ -45,7 +45,7 @@ _usage(){
     :
     cat<<-EOF
 	    $0 --install
-	    $0 --uninstall
+	    $0 --remove
 	    $0 --status
 	EOF
 }
@@ -53,7 +53,7 @@ _usage(){
 
 case $1 in
     --install)_install;;
-    --uninstall)_uninstall;;
+    --remove)_remove;;
     --status)_status;;
     --start)_start;;
     --stop)_stop;;

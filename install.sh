@@ -1,36 +1,46 @@
 #!/bin/bash
 
 dthis="$(cd "$(dirname "$0")" && pwd)"
+[ -z "${isnssm+x}" ]&&isnssm=t
 
 
-_query(){
-    "$dthis/scripts/query.sh" --query
+_inspect(){
+    "$dthis/scripts/reginspect.sh"
 }
 
 _install(){
     :
-    "$dthis/scripts/install.bat"
+    if [ "$isnssm" = t ];then
+        "$dthis/scripts/install.bat"
+    else
+        "$dthis/scripts/install.sh" --install
+    fi
 }
 
-_uninstall(){
+_remove(){
     :
-    
-    "$dthis/scripts/uninstall.bat"
+    if [ "$isnssm" = t ];then
+        "$dthis/scripts/uninstall.bat"
+    else
+        "$dthis/scripts/install.sh" --remove
+    fi
 }
+
+
 
 _usage(){
     cat<<-EOF
 	SYNOPSIS
-	    $0 --install
-	    $0 --uninstall
+	    [isnssm=] $0 --install
+	    [isnssm=] $0 --remove
 	    $0 --query
 	EOF
 }
 
 case $1 in
     --install)_install;;
-    --uninstall)_uninstall;;
-    --query)_query;;
+    --remove)_remove;;
+    --inspect)_inspect;;
     *)_usage;;
 esac
 
