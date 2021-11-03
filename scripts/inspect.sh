@@ -14,12 +14,26 @@ _regentries(){
     reg query "$k"'\parameters'
     reg query "$k"'\parameters\appexit'
 }
-_inspect(){
+
+_servicenames(){
     [ -f "$fenv" ]||return 1
-    declare -a vs
-    IFS=$'\n' read -r -a vs -d $'\0' < \
+    IFS=$'\n' read -r -a "$1" -d $'\0' < \
         <(sed -n 's/^SET ".\?servicename=\([0-9a-z]*\)"$/\1/p' "$fenv")
 
+
+}
+
+_status(){
+    :
+    declare -a vs;_servicenames 'vs'
+    for v in "${vs[@]}";do
+        sc query "$v"
+    done
+}
+
+_inspect(){
+    declare -a vs;_servicenames 'vs'
+    
     for v in "${vs[@]}";do
         _regentries "$v"
     done
@@ -31,12 +45,14 @@ _usage(){
     cat<<-EOF
 	SYNOPSIS
 	    $0 --inspect
+	    $0 --status
 	EOF
 }
 
 
 case ${1:---inspect} in
     --inspect)_inspect;;
+    --status)_status;;
     *)_usage;;
 esac
 

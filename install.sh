@@ -5,7 +5,8 @@ dthis="$(cd "$(dirname "$0")" && pwd)"
 
 
 _inspect(){
-    "$dthis/scripts/reginspect.sh"
+    "$dthis/scripts/inspect.sh" --inspect
+    "$dthis/scripts/inspect.sh" --status
 }
 
 _install(){
@@ -33,7 +34,12 @@ _usage(){
 	SYNOPSIS
 	    [isnssm=] $0 --install
 	    [isnssm=] $0 --remove
-	    $0 --query
+	    $0 --inspect
+	EPILOGUE
+	    sudo bash -c 'isnssm= ./install.sh --remove'
+	    ./install.sh --install          uses nssm
+	    isnssm=t ./install.sh --install uses nssm
+	    isnssm= ./install.sh --install  uses cygrunsrv
 	EOF
 }
 
