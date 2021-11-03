@@ -28,6 +28,7 @@ _status(){
     declare -a vs;_servicenames 'vs'
     for v in "${vs[@]}";do
         sc query "$v"
+        sc qc "$v"
     done
 }
 

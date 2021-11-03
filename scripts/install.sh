@@ -13,7 +13,8 @@ _install(){
     cygrunsrv -I "$servicename" \
         -p "$fexecutable" \
         -1 "$dlog/$servicename.stdout" \
-        -2 "$dlog/$servicename.stderr"
+        -2 "$dlog/$servicename.stderr" \
+        && _start
 }
 
 _remove(){
