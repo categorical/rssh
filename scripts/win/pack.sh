@@ -1,16 +1,16 @@
 #!/bin/bash
 
 dthis="$(cd "$(dirname "$0")" && pwd)"
-droot="$(cd "$dthis/.." && pwd)"
+droot="$(cd "$dthis/../.." && pwd)"
 dstaging="$droot/staging";[ -d "$dstaging" ]||mkdir "$dstaging"
 
 
 _pack(){
     local items=()
     items+=('vendor/nssm.exe')
-    items+=('scripts/install.bat')
-    items+=('scripts/run.bat')
-    items+=('scripts/uninstall.bat')
+    items+=('scripts/win/install.bat')
+    items+=('scripts/win/run_ssh.bat')
+    items+=('scripts/win/uninstall.bat')
  
     local d="$droot"
     local fdest=$(cygpath -w "$dstaging/rssh.zip")
