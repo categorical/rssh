@@ -18,4 +18,3 @@ GOTO :eof
 net stop %servicename%
 sc delete %servicename%
 
-
