@@ -4,6 +4,7 @@ dthis="$(cd "$(dirname "$0")" && pwd)"
 [ -z "${isnssm+x}" ]&&isnssm=t
 
 
+
 _inspect(){
     "$dthis/scripts/inspect.sh" --inspect
     "$dthis/scripts/inspect.sh" --status

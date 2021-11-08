@@ -1,0 +1,19 @@
+
+
+
+
+servicename 3rssh
+remote      rssh@intermediate      
+remotebind  127.0.0.1
+remoteport  17072
+hostport    3389
+
+
+servicename 4rssh
+remote      rssh@intermediate      
+remotebind  127.0.0.1
+remoteport  17073
+hostport    3390
+
+
+

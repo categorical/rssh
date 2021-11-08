@@ -5,6 +5,20 @@ droot="$(cd "$dthis/../.." && pwd)"
 dlog="$droot/log"
 fexecutable="$dthis/run.sh"
 source "$dthis/env.sh"
+fconfig="$droot/config"
+
+_connect(){
+    [ -f "$fconfig" ]||{ _errorf 'file not found: %s' "$fconfig" && exit 1;}
+ 
+    local host="$(printf 'host %s' "$1")"
+    grep "$host" "$fconfig" 2>&1 1>/dev/null||{ _errorf 'host not found: %s' "$1" && exit 1;}
+    local s="$(_field "$host" 'server')"
+    local u="$(_field "$host" 'username')"
+    local p="$(_field "$host" 'password')"
+    local d="$(_field "$host" 'database')"
+    "$executable" -s "$s" -u "$u" -p "$p" -d "$d"
+}
+
 
 _install(){
     :
