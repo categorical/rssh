@@ -32,3 +32,22 @@ i.e. ssh -J SERVER -p 16000 PC2USER@localhost
 
 
 
+
+
+msrdp:
+method 1
+# sshd_config
+GatewayPorts clientspecified
+ssh -N -R 0.0.0.0:10000:127.0.0.1:3389 rssh@intermediate
+msrdp intermediate:10000
+
+method 2
+ssh -N -R 10000:127.0.0.1:3389 rssh@intermediate
+ssh -L 13389:intermediate:10000 rssh@intermediate
+msrdp 127.0.0.1:13389
+
+
+
+
+
+
