@@ -12,7 +12,7 @@ remote=${remote:-'rssh@intermediate'}
 fidentity=${fidentity:-'d:\home\.ssh\id_rsa'}
 dssh=${dssh:-'d:\home\.ssh'}
 
-echo "$executable" -M0 \
+"$executable" -M0 \
     -oserveraliveinterval=60 \
     -oserveralivecountmax=1 \
     -oexitonforwardfailure=yes \

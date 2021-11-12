@@ -69,7 +69,7 @@ _configfield(){
 
 _setenv(){ 
     servicename="$1"
-    _filecacheset "$fconfig"
+    #_filecacheset "$fconfig"
     _setenvconfig "$1" && return
     _setenvbat
 }

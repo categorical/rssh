@@ -9,8 +9,7 @@ fconfig="$droot/config"
 
 _install(){
     :
-    _setenv "$1"
-    echo cygrunsrv -I "$servicename" \
+    cygrunsrv -I "$servicename" \
         -p "$fexecutable" \
         -1 "$dlog/$servicename.stdout" \
         -2 "$dlog/$servicename.stderr" \
@@ -65,8 +64,9 @@ _usage(){
 
 
 case $1 in
+    --*)_setenv "$2";;&
     --install)shift;_install "$@";;
-    --remove)_remove;;
+    --remove)shift;_remove "$@";;
     --status)_status;;
     --start)_start;;
     --stop)_stop;;
