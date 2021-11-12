@@ -22,7 +22,7 @@ _sourcebat(){
             *);;
         esac
     done < "$1"
-};_sourcebat "$fenv"
+};
 
 
 
@@ -42,22 +42,15 @@ _infof(){ local f=$1;shift;printf "\033[96minfo: \033[0m%s\n" "$(printf "$f" "$@
 _errorf(){ local f=$1;shift;printf "\033[91merror: \033[0m%s\n" "$(printf "$f" "$@")";}
 
 
-_sourceenvkey(){
-    local v="$(printenv "$1")"
-    [ -z "$v" ]||eval "$1='$v'"
-}
-_sourceenv(){
-    :
-    #_sourceenvkey 'servicename'
-
-}
-
 _setenv(){ 
     servicename="$1"
-    if ! _setenvconfig "$1";then
-        :
-    fi
-    
+    _setenvconfig "$1" && return
+    _setenvbat
+}
+
+_setenvbat(){
+    _sourcebat "$fenv"||return 1
+    _infof 'confs loaded from %s' "$fenv"
 }
 
 _setenvconfig(){
