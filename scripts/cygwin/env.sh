@@ -26,7 +26,6 @@ _sourcebat(){
 
 
 
-
 _configvs(){
     local k1="$(_esed "$1")"
     IFS=$'\n' read -r -d $'\0' -a "$2" \
@@ -36,16 +35,12 @@ _configfield(){
     local k1="$(_esed "$1")"
     local k2="$(_esed "$2")"
     local k3="$(_esed "$3")"
-    sed -n -e "/^$k1\\s\\+$k2/,\${/^\\s*$/q;s/^$k3//p}" "$fconfig"|tr -d '[:space:]'
+    sed -n -e "/^$k1\\s\\+$k2/,\${/^\\s*$/q;s/^$k3\\s\\+//p}" "$fconfig"|sed -e 's/\s*$//'
 }
 _esed(){ printf '%s' "$1"|sed 's/[.[\*^$/]/\\&/g';}
 _infof(){ local f=$1;shift;printf "\033[96minfo: \033[0m%s\n" "$(printf "$f" "$@")";}
 _errorf(){ local f=$1;shift;printf "\033[91merror: \033[0m%s\n" "$(printf "$f" "$@")";}
 
-
-
-[ -z "$remotebind" ]||remotebind="$remotebind:"
-hostport=${hostport:-22}
 
 _sourceenvkey(){
     local v="$(printenv "$1")"
@@ -55,8 +50,27 @@ _sourceenv(){
     :
     #_sourceenvkey 'servicename'
 
-};_sourceenv
-printenv 'servicename'
-#echo "$servicename"
+}
 
+_setenv(){ 
+    servicename="$1"
+    if ! _setenvconfig "$1";then
+        :
+    fi
+    
+}
+
+_setenvconfig(){
+    if [ ! -f "$fconfig" ] \
+        || [ -z "$1" ] \
+        || ! grep 'servicename' "$fconfig"|grep "$1" 2>&1 >/dev/null;then
+        _infof 'not found: servicename: %s config: %s' "$1" "$fconfig"
+        return 1
+    fi
+    remote="$(_configfield 'servicename' "$1" 'remote')"
+    remoteport="$(_configfield 'servicename' "$1" 'remoteport')"
+    hostport="$(_configfield 'servicename' "$1" 'hostport')"
+    remotebind="$(_configfield 'servicename' "$1" 'remotebind')"
+
+}
 

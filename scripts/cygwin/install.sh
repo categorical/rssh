@@ -7,25 +7,17 @@ fexecutable="$dthis/run.sh"
 source "$dthis/env.sh"
 fconfig="$droot/config"
 
-_connect(){
-    [ -f "$fconfig" ]||{ _errorf 'file not found: %s' "$fconfig" && exit 1;}
- 
-    local host="$(printf 'host %s' "$1")"
-    grep "$host" "$fconfig" 2>&1 1>/dev/null||{ _errorf 'host not found: %s' "$1" && exit 1;}
-    local s="$(_field "$host" 'server')"
-    local u="$(_field "$host" 'username')"
-    local p="$(_field "$host" 'password')"
-    local d="$(_field "$host" 'database')"
-    "$executable" -s "$s" -u "$u" -p "$p" -d "$d"
-}
-
-
 _install(){
     :
-    cygrunsrv -I "$servicename" \
+    _setenv "$1"
+    echo cygrunsrv -I "$servicename" \
         -p "$fexecutable" \
         -1 "$dlog/$servicename.stdout" \
         -2 "$dlog/$servicename.stderr" \
+        -e remotebind="$remotebind" \
+        -e remoteport="$remoteport" \
+        -e remote="$remote" \
+        -e hostport="$hostport" \
         && _start
 }
 
@@ -65,7 +57,7 @@ _usage(){
 
 
 case $1 in
-    --install)_install;;
+    --install)shift;_install "$@";;
     --remove)_remove;;
     --status)_status;;
     --start)_start;;
