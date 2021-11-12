@@ -15,7 +15,7 @@ _install(){
     if [ "$isnssm" = t ];then
         "$dthis/scripts/win/install.bat"
     else
-        "$dthis/scripts/cygwin/install.sh" --install
+        "$dthis/scripts/cygwin/install.sh" --install "$@"
     fi
 }
 
@@ -24,7 +24,7 @@ _remove(){
     if [ "$isnssm" = t ];then
         "$dthis/scripts/win/uninstall.bat"
     else
-        "$dthis/scripts/cygwin/install.sh" --remove
+        "$dthis/scripts/cygwin/install.sh" --remove "$@"
     fi
 }
 
@@ -45,8 +45,8 @@ _usage(){
 }
 
 case $1 in
-    --install)_install;;
-    --remove)_remove;;
+    --install)shift;_install "$@";;
+    --remove)shift;_remove "$@";;
     --inspect)_inspect;;
     *)_usage;;
 esac

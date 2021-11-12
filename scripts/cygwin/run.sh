@@ -12,11 +12,12 @@ source "$dthis/env.sh"
 dssh=$(cygpath -u "$dssh")
 fidentity=$(cygpath -u "$fidentity")
 
-"$executable" -M0 \
+
+echo "$executable" -M0 \
     -oserveraliveinterval=60 \
     -oserveralivecountmax=1 \
     -oexitonforwardfailure=yes \
-    -N -R "$remoteport:localhost:22" \
+    -N -R "$remotebind$remoteport:localhost:$hostport" \
     -i"$fidentity" \
     -ouserknownhostsfile="\"$dssh/known_hosts\"" \
     "$remote" \

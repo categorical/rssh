@@ -8,6 +8,12 @@ fenv="$droot/env.bat"
 fconfig="$droot/config"
 
 
+_sourcebatline(){
+    local k v
+    k="$(printf '%s' "$1"|sed 's/^SET "\([_a-z]*\)=\(.*\)"$/\1/')";k="${k#_}"
+    v="$(printf '%s' "$1"|sed 's/^SET "\([_a-z]*\)=\(.*\)"$/\2/')"
+    eval "$k='$v'"
+}
 _sourcebat(){
     [ -f "$1" ]||return 1
     while IFS= read -r;do
@@ -15,17 +21,9 @@ _sourcebat(){
             'SET '*)_sourcebatline "$REPLY";;
             *);;
         esac
-    done < "$fenv"
-}
-_sourcebatline(){
-    local k v
-    k="$(printf '%s' "$1"|sed 's/^SET "\([_a-z]*\)=\(.*\)"$/\1/')";k="${k#_}"
-    v="$(printf '%s' "$1"|sed 's/^SET "\([_a-z]*\)=\(.*\)"$/\2/')"
-    eval "$k='$v'"
-}
+    done < "$1"
+};_sourcebat "$fenv"
 
-
-_sourcebat "$fenv"
 
 
 
@@ -46,6 +44,19 @@ _errorf(){ local f=$1;shift;printf "\033[91merror: \033[0m%s\n" "$(printf "$f" "
 
 
 
+[ -z "$remotebind" ]||remotebind="$remotebind:"
+hostport=${hostport:-22}
 
+_sourceenvkey(){
+    local v="$(printenv "$1")"
+    [ -z "$v" ]||eval "$1='$v'"
+}
+_sourceenv(){
+    :
+    #_sourceenvkey 'servicename'
+
+};_sourceenv
+printenv 'servicename'
+#echo "$servicename"
 
 
