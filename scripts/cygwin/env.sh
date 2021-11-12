@@ -50,20 +50,20 @@ _setenv(){
 
 _setenvbat(){
     _sourcebat "$fenv"||return 1
-    _infof 'confs loaded from %s' "$fenv"
+    _infof 'confs loaded: servicename: %s file: %s' "$servicename" "$fenv"
 }
 
 _setenvconfig(){
     if [ ! -f "$fconfig" ] \
         || [ -z "$1" ] \
         || ! grep 'servicename' "$fconfig"|grep "$1" 2>&1 >/dev/null;then
-        _infof 'not found: servicename: %s config: %s' "$1" "$fconfig"
+        _infof 'not found: servicename: %s file: %s' "$1" "$fconfig"
         return 1
     fi
     remote="$(_configfield 'servicename' "$1" 'remote')"
     remoteport="$(_configfield 'servicename' "$1" 'remoteport')"
     hostport="$(_configfield 'servicename' "$1" 'hostport')"
     remotebind="$(_configfield 'servicename' "$1" 'remotebind')"
-
+    _infof 'confs loaded: servicename: %s file: %s' "$servicename" "$fconfig"
 }
 
