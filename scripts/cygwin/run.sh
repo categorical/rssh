@@ -5,18 +5,18 @@ dthis=$(cd "$(dirname "$0")" && pwd)
 droot="$(cd "$dthis/../.." && pwd)"
 executable=autossh
 
-
+hostport=${hostport:-22}
+remotebind=${remotebind:-127.0.0.1}
 remoteport=${remoteport:-17075}
 remote=${remote:-'rssh@intermediate'}
-dssh=${dssh:-'d:\home\.ssh'}
 fidentity=${fidentity:-'d:\home\.ssh\id_rsa'}
-hostport=${hostport:-22}
+dssh=${dssh:-'d:\home\.ssh'}
 
 echo "$executable" -M0 \
     -oserveraliveinterval=60 \
     -oserveralivecountmax=1 \
     -oexitonforwardfailure=yes \
-    -N -R "$remoteport:localhost:$hostport" \
+    -N -R "$remotebind:$remoteport:localhost:$hostport" \
     -i"$(cygpath -u "$fidentity")" \
     -ouserknownhostsfile="\"$(cygpath -u "$dssh")/known_hosts\"" \
     "$remote" \

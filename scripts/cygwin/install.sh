@@ -20,6 +20,14 @@ _install(){
         -e hostport="$hostport" \
         && _start
 }
+_installlist(){
+    :
+    declare -a vs
+    _configvs "$fconfig" 'servicename' 'vs'
+    for v in "${vs[@]}";do
+        _infof '%s' "$v"
+    done
+}
 
 _remove(){
     :
@@ -63,6 +71,7 @@ case $1 in
     --start)_start;;
     --stop)_stop;;
     --list)_list;;
+    --installlist)_installlist;;
     *)_usage;;
 esac
 
