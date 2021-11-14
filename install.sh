@@ -38,9 +38,9 @@ _usage(){
 	    $0 --inspect
 	EPILOGUE
 	    sudo bash -c 'isnssm= ./install.sh --remove'
-	    ./install.sh --install          uses cygrunsrv
-	    isnssm= ./install.sh --install  uses cygrunsrv
-	    isnssm=t ./install.sh --install uses nssm
+	    isnssm=t ./install.sh --install installs 1rssh (env.bat) using nssm
+	    ./install.sh --install          installs 2rssh (env.bat) using cygrunsrv
+	    ./install.sh --install 3rssh    installs 3rssh (config) using cygrunsrv
 	EOF
 }
 
