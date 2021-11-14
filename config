@@ -5,9 +5,9 @@
 servicename 3rssh
 remote      rssh@intermediate      
 remotebind  127.0.0.1
-remoteport  17072
+remoteport  17073
 hostport    3389
-
+fidentity   d:\home\.ssh\altkeys\ex15\id_rsa
 
 servicename 4rssh
 remote      rssh@intermediate      

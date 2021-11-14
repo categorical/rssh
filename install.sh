@@ -1,7 +1,7 @@
 #!/bin/bash
 
 dthis="$(cd "$(dirname "$0")" && pwd)"
-[ -z "${isnssm+x}" ]&&isnssm=t
+# [ -z "${isnssm+x}" ]&&isnssm=t
 
 
 
@@ -33,14 +33,14 @@ _remove(){
 _usage(){
     cat<<-EOF
 	SYNOPSIS
-	    [isnssm=] $0 --install
-	    [isnssm=] $0 --remove
+	    [isnssm=t] $0 --install
+	    [isnssm=t] $0 --remove
 	    $0 --inspect
 	EPILOGUE
 	    sudo bash -c 'isnssm= ./install.sh --remove'
-	    ./install.sh --install          uses nssm
-	    isnssm=t ./install.sh --install uses nssm
+	    ./install.sh --install          uses cygrunsrv
 	    isnssm= ./install.sh --install  uses cygrunsrv
+	    isnssm=t ./install.sh --install uses nssm
 	EOF
 }
 

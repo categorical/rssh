@@ -17,6 +17,8 @@ _install(){
         -e remoteport="$remoteport" \
         -e remote="$remote" \
         -e hostport="$hostport" \
+        -e fidentity="$fidentity" \
+        -e dssh="$dssh" \
         && _start
 }
 _installlist(){
@@ -64,14 +66,13 @@ _usage(){
 
 
 case $1 in
-    --*)_setenv "$2";;&
-    --install)shift;_install "$@";;
-    --remove)shift;_remove "$@";;
+    --*)shift;_setenv "$1";;&
+    --install)_install;;
+    --remove)_remove;;
     --status)_status;;
     --start)_start;;
     --stop)_stop;;
     --list)_list;;
-    --installlist)_installlist;;
     *)_usage;;
 esac
 

@@ -6,7 +6,6 @@ dthis="$(cd "$(dirname "$0")" && pwd)"
 droot="$(cd "$dthis/../.." && pwd)"
 fenv="$droot/env.bat"
 fconfig="$droot/config"
-_filecache212a0391=
 
 _infof(){ local f=$1;shift;printf "\033[96minfo: \033[0m%s\n" "$(printf "$f" "$@")";}
 _errorf(){ local f=$1;shift;printf "\033[91merror: \033[0m%s\n" "$(printf "$f" "$@")";}
@@ -29,33 +28,33 @@ _sourcebat(){
 };
 
 
-_filecachek(){
-    local f="$1"
-    printf '_filecache%s' "$(printf "$f"|md5sum|head -c8)"
-}
-_filecacheset(){
-    local f="$1"
-    local k="$(_filecachek "$f")"
-    local v="$(cat "$f")"
-    eval "$k="'"$v"'
-}
+#_filecachek(){
+#    local f="$1"
+#    printf '_filecache%s' "$(printf "$f"|md5sum|head -c8)"
+#}
+#_filecacheset(){
+#    local f="$1"
+#    local k="$(_filecachek "$f")"
+#    local v="$(cat "$f")"
+#    eval "$k="'"$v"'
+#}
 
-_filecache(){
-    local f="$1"
-    local k="$(_filecachek "$f")"
+# _filecache(){
+#     local f="$1"
+#     local k="$(_filecachek "$f")"
     
-    #local v="$(eval "printf '%s' \"\$$k\"")"
-    local v="${!k}"
-    printf '%s' "$v"
-}
+#     #local v="$(eval "printf '%s' \"\$$k\"")"
+#     local v="${!k}"
+#     printf '%s' "$v"
+# }
 
-_configvs(){
-    local f="$1"
-    local k1="$(_esed "$2")"
-    local _vs="$3"
-    IFS=$'\n' read -r -d $'\0' -a "$_vs" \
-        < <(sed -n -e "s/^$k1\\s\\+//p" "$f"|sed 's/\s*$//')
-}
+# _configvs(){
+#     local f="$1"
+#     local k1="$(_esed "$2")"
+#     local _vs="$3"
+#     IFS=$'\n' read -r -d $'\0' -a "$_vs" \
+#         < <(sed -n -e "s/^$k1\\s\\+//p" "$f"|sed 's/\s*$//')
+# }
 _configfield(){
     local f="$1"
     local k1="$(_esed "$2")"
@@ -91,6 +90,8 @@ _setenvconfig(){
     remoteport="$(_configfield "$fconfig" "$k1" "$1" 'remoteport')"
     hostport="$(_configfield "$fconfig" "$k1" "$1" 'hostport')"
     remotebind="$(_configfield "$fconfig" "$k1" "$1" 'remotebind')"
+    fidentity="$(_configfield "$fconfig" "$k1" "$1" 'fidentity')"
+    dssh="$(_configfield "$fconfig" "$k1" "$1" 'dssh')"
     _infof 'servicename: %s config: %s' "$servicename" "$fconfig"
     local t1="$(date '+%s%N'|head -c13)"
     _infof 'elapsed: %d ms' $(($t1-$t0))
