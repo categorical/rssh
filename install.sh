@@ -12,7 +12,8 @@ _inspect(){
 
 _install(){
     :
-    if [ "$isnssm" = t ];then
+    #if [ "$isnssm" = t ];then
+    if [ $# -eq 0 ];then
         "$dthis/scripts/win/install.bat"
     else
         "$dthis/scripts/cygwin/install.sh" --install "$@"
@@ -21,7 +22,8 @@ _install(){
 
 _remove(){
     :
-    if [ "$isnssm" = t ];then
+    #if [ "$isnssm" = t ];then
+    if [ $# -eq 0 ];then
         "$dthis/scripts/win/uninstall.bat"
     else
         "$dthis/scripts/cygwin/install.sh" --remove "$@"
@@ -33,13 +35,12 @@ _remove(){
 _usage(){
     cat<<-EOF
 	SYNOPSIS
-	    [isnssm=t] $0 --install
-	    [isnssm=t] $0 --remove
+	    $0 --install [servicename]
+	    $0 --remove [servicename]
 	    $0 --inspect
 	EPILOGUE
-	    sudo bash -c 'isnssm= ./install.sh --remove'
-	    isnssm=t ./install.sh --install installs 1rssh (env.bat) using nssm
-	    ./install.sh --install          installs 2rssh (env.bat) using cygrunsrv
+	    sudo bash -c './install.sh --remove'
+	    ./install.sh --install          installs 1rssh (env.bat) using nssm
 	    ./install.sh --install 3rssh    installs 3rssh (config) using cygrunsrv
 	EOF
 }

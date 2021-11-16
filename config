@@ -3,16 +3,17 @@
 
 
 servicename 3rssh
-remote      rssh@intermediate      
+remote      rssh@gitlab      
 remotebind  127.0.0.1
-remoteport  17073
+remoteport  17076
 hostport    3389
-fidentity   d:\home\.ssh\altkeys\ex15\id_rsa
+fidentity   d:\home\.ssh\id_rsa
+dssh        d:\home\.ssh
 
 servicename 4rssh
-remote      rssh@intermediate      
-remotebind  127.0.0.1
-remoteport  17073
+remote      rssh@gitlab     
+remotebind  0.0.0.0
+remoteport  17077
 hostport    3389
 
 
