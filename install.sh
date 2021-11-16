@@ -40,8 +40,8 @@ _usage(){
 	    $0 --inspect
 	EPILOGUE
 	    sudo bash -c './install.sh --remove'
-	    ./install.sh --install          installs 1rssh (env.bat) using nssm
-	    ./install.sh --install 3rssh    installs 3rssh (config) using cygrunsrv
+	    ./install.sh --install          installs 1rssh (env.bat)
+	    ./install.sh --install 3rssh    installs 3rssh (config)
 	EOF
 }
 
