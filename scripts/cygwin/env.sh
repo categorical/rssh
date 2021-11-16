@@ -4,28 +4,28 @@
 
 dthis="$(cd "$(dirname "$0")" && pwd)"
 droot="$(cd "$dthis/../.." && pwd)"
-fenv="$droot/env.bat"
+#fenv="$droot/env.bat"
 fconfig="$droot/config"
 
-_infof(){ local f=$1;shift;printf "\033[96minfo: \033[0m%s\n" "$(printf "$f" "$@")";}
-_errorf(){ local f=$1;shift;printf "\033[91merror: \033[0m%s\n" "$(printf "$f" "$@")";}
+_infof(){ local f=$1;shift;printf "\033[96m%-8s: \033[0m%s\n" 'info' "$(printf "$f" "$@")";}
+_errorf(){ local f=$1;shift;printf "\033[91m%-8s: \033[0m%s\n" 'error' "$(printf "$f" "$@")";}
 _esed(){ printf '%s' "$1"|sed 's/[.[\*^$/]/\\&/g';}
 
-_sourcebatline(){
-    local k v
-    k="$(printf '%s' "$1"|sed 's/^SET "\([_a-z]*\)=\(.*\)"$/\1/')";k="${k#_}"
-    v="$(printf '%s' "$1"|sed 's/^SET "\([_a-z]*\)=\(.*\)"$/\2/')"
-    eval "$k='$v'"
-}
-_sourcebat(){
-    [ -f "$1" ]||return 1
-    while IFS= read -r;do
-        case $REPLY in
-            'SET '*)_sourcebatline "$REPLY";;
-            *);;
-        esac
-    done < "$1"
-};
+#_sourcebatline(){
+#    local k v
+#    k="$(printf '%s' "$1"|sed 's/^SET "\([_a-z]*\)=\(.*\)"$/\1/')";k="${k#_}"
+#    v="$(printf '%s' "$1"|sed 's/^SET "\([_a-z]*\)=\(.*\)"$/\2/')"
+#    eval "$k='$v'"
+#}
+#_sourcebat(){
+#    [ -f "$1" ]||return 1
+#    while IFS= read -r;do
+#        case $REPLY in
+#            'SET '*)_sourcebatline "$REPLY";;
+#            *);;
+#        esac
+#    done < "$1"
+#};
 
 
 #_filecachek(){
@@ -39,22 +39,23 @@ _sourcebat(){
 #    eval "$k="'"$v"'
 #}
 
-# _filecache(){
-#     local f="$1"
-#     local k="$(_filecachek "$f")"
-    
-#     #local v="$(eval "printf '%s' \"\$$k\"")"
-#     local v="${!k}"
-#     printf '%s' "$v"
-# }
+#_filecache(){
+#    local f="$1"
+#    local k="$(_filecachek "$f")"
 
-# _configvs(){
-#     local f="$1"
-#     local k1="$(_esed "$2")"
-#     local _vs="$3"
-#     IFS=$'\n' read -r -d $'\0' -a "$_vs" \
-#         < <(sed -n -e "s/^$k1\\s\\+//p" "$f"|sed 's/\s*$//')
-# }
+#    #local v="$(eval "printf '%s' \"\$$k\"")"
+#    local v="${!k}"
+#    printf '%s' "$v"
+#}
+
+#_configvs(){
+#    local f="$1"
+#    local k1="$(_esed "$2")"
+#    local _vs="$3"
+#    IFS=$'\n' read -r -d $'\0' -a "$_vs" \
+    #        < <(sed -n -e "s/^$k1\\s\\+//p" "$f"|sed 's/\s*$//')
+#}
+
 _configfield(){
     local f="$1"
     local k1="$(_esed "$2")"
@@ -66,16 +67,25 @@ _configfield(){
 }
 
 
-_setenv(){ 
+_setenv(){
     servicename="$1"
+    _elapsed _setenvconfig "$1"
     #_filecacheset "$fconfig"
-    _setenvconfig "$1" && return
-    _setenvbat
+    #_setenvconfig "$1" && return
+    #_setenvbat
 }
 
-_setenvbat(){
-    _sourcebat "$fenv"||return 1
-    _infof 'servicename: %s config: %s' "$servicename" "$fenv"
+#_setenvbat(){
+#    _sourcebat "$fenv"||return 1
+#    _infof 'servicename: %s config: %s' "$servicename" "$fenv"
+#}
+
+_elapsed(){
+    local t0="$(date '+%s%N'|head -c13)"
+    "$@";local rv=$?
+    local t1="$(date '+%s%N'|head -c13)"
+    _infof 'elapsed: %d ms' $(($t1-$t0))
+    return $rv
 }
 
 _setenvconfig(){
@@ -85,7 +95,6 @@ _setenvconfig(){
         || [ -z "$(_configfield "$fconfig" "$k1" "$1" 'servicename')" ];then
         return 1
     fi
-    local t0="$(date '+%s%N'|head -c13)"
     remote="$(_configfield "$fconfig" "$k1" "$1" 'remote')"
     remoteport="$(_configfield "$fconfig" "$k1" "$1" 'remoteport')"
     hostport="$(_configfield "$fconfig" "$k1" "$1" 'hostport')"
@@ -93,7 +102,4 @@ _setenvconfig(){
     fidentity="$(_configfield "$fconfig" "$k1" "$1" 'fidentity')"
     dssh="$(_configfield "$fconfig" "$k1" "$1" 'dssh')"
     _infof 'servicename: %s config: %s' "$servicename" "$fconfig"
-    local t1="$(date '+%s%N'|head -c13)"
-    _infof 'elapsed: %d ms' $(($t1-$t0))
 }
-

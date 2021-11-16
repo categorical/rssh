@@ -66,13 +66,13 @@ _usage(){
 
 
 case $1 in
-    --*)shift;_setenv "$1";;&
+    --list)_list;;
+    --*)shift;_setenv "$1"||{ _errorf 'not found: %s' "$1";exit 1;};;&
     --install)_install;;
     --remove)_remove;;
     --status)_status;;
     --start)_start;;
     --stop)_stop;;
-    --list)_list;;
     *)_usage;;
 esac
 
