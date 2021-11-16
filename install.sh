@@ -28,6 +28,7 @@ _remove(){
     else
         "$dthis/scripts/cygwin/install.sh" --remove "$@"
     fi
+
 }
 
 
