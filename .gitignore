@@ -2,4 +2,6 @@
 log*
 staging
 env.bat
+config
+
 
